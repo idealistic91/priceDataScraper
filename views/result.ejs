@@ -1,5 +1,6 @@
 <html>
     <head>
+            <meta http-equiv="refresh" content="5; URL="/scrape">
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../style.css">
@@ -12,32 +13,80 @@
 
     </head>
     <body>
-        
+        <%if(alert.oldVal){ %>
+            <div class="alert alert-danger" role="alert">
+                    Die Preise haben sich verändert!!
+            </div>
+        <%}%>
     <div class="container">
-            <h1>Aktuelle Preise Hoyer Tankstelle</h1>
-
-            
-           
-            <div>
-                <h4>Diesel</h4>
-                <div id="diesel" class="preise"></div>
+        <h1>Preise Tankstelle Hoyer</h1>
+    </div>    
+    <div class="container">  
+        <div class="row">
+            <div class="recent col-sm">
+                    <div class="head">
+                            <h2>Aktuell</h2>
+                        </div>   
+                    
+                
+                    <div>
+                        <h4>Diesel</h4>
+                        <div id="diesel" class="preise"></div>
+                    </div>
+                    <div>
+                        <h4>Super</h4>
+                        <div id="super" class="preise"></div>
+                    </div>
+                    <div> 
+                        <h4>Super +</h4>
+                        <div id="superPlus" class="preise"></div>
+                    </div>
+                
             </div>
-            <div>
-                <h4>Super</h4>
-                <div id="super" class="preise"></div>
+            <%if(alert.oldVal){ %>
+            <div class="col-sm" id="changes">
+                <div class="head">
+                    <h2>Änderungen</h2>
+                </div>   
+                    <div class="kraftstoff">
+                        <h4>Diesel</h4>
+                        <div id="dieselNEU" class="preise"></div>
+                    </div>
+                    <div class="kraftstoff">
+                        <h4>Super</h4>
+                        <div id="superNEU" class="preise"></div>
+                    </div>
+                    <div class="kraftstoff"> 
+                        <h4>Super +</h4>
+                        <div id="superPlusNEU" class="preise"></div>
+                    </div>
+                
             </div>
-            <div> 
-                <h4>Super +</h4>
-                <div id="superPlus" class="preise"></div>
-            </div>
-           
-    </div>
-            
+            <%}%>
+        </div>    
+    </div>         
     
      <script>
-         $("#diesel").sevenSeg({ digits: 4, value: parseFloat(<%=preise.diesel%>)});
-         $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%> });
-         $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%> });
+         
+        
+        
+        
+         $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
+         $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+         $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+
+
+         $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
+         $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+         $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+      
+
+         setTimeout(function(){
+                            window.location.reload(1);
+
+                            }, 5000);
+
+
 
      </script>               
 

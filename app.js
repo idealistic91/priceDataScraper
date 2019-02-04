@@ -14,6 +14,17 @@ var preise = {
     superPlus: ""
 };
 
+var altePreise = {
+    diesel: "",
+    sorteSuper: "",
+    superPlus: ""
+};
+var alert = {};
+
+
+
+
+
 function hoyerRequest (req, res, next){
 
     request("https://www.hoyer-tankstellen.de/tankstelle/hoyer_autohof_hansator-28217_bremen-hansator_7", function(error, response, html){
@@ -21,21 +32,37 @@ function hoyerRequest (req, res, next){
         if(!error && response.statusCode == 200){
             var $ = cheerio.load(html);       
             console.log("keine fehler");
-            var diesel, sorteSuper, superPlus;
+            
             
             
            
            $('#sorte_3_1').filter(function(){
-                //checke ob a segment an oder aus ist.
+                
                 var data = $(this);
+                if(data.text()!=preise.diesel){
+                    console.log("Diesel has changed");
+
+                    alert = {
+                        oldVal : preise.diesel,
+                        newVal : data.text()
+                    }
+                };
                 preise.diesel = parseFloat(data.text(), 10);
                 console.log(preise.diesel);
                 
 
             });
             $('#sorte_5_3').filter(function(){
-                //checke ob a segment an oder aus ist.
+                
                 var data = $(this);
+                if(data.text()!=preise.sorteSuper){
+                    console.log("Super has changed");
+
+                    alert = {
+                        oldVal : preise.sorteSuper,
+                        newVal : data.text()
+                    }
+                };
                 preise.sorteSuper = parseFloat(data.text(), 10);
                 console.log(preise.sorteSuper);
                 
@@ -43,8 +70,18 @@ function hoyerRequest (req, res, next){
 
             });
             $('#sorte_1_10').filter(function(){
-                //checke ob a segment an oder aus ist.
+                
                 var data = $(this);
+                if(data.text()!=preise.superPlus){
+                    console.log("Super plus has changed");
+                    alert = {
+                        oldVal : preise.superPlus,
+                        newVal : data.text()
+                    }
+                    console.log("old value: "+alert.oldVal);
+                    console.log("new value: "+alert.newVal);
+
+                };
                 preise.superPlus = parseFloat(data.text(), 10);
                 console.log(preise.superPlus);
                
@@ -52,7 +89,7 @@ function hoyerRequest (req, res, next){
 
             });
             
-         return preise;   
+            
             
         } if(error) {
             console.log("Fehler: "+error);
@@ -76,16 +113,9 @@ function hoyerRequest (req, res, next){
 
 app.get("/scrape",hoyerRequest, function(req, res){
     
+
+    res.render("result", {preise: preise, alert: alert});
     
-
-    res.render("result", {preise: preise});
-    
-    
-
-    
-
-
-
 
 });
 
@@ -94,4 +124,3 @@ app.listen(3000, function(){
     console.log("started");
 });
 
-// exports = module.exports = app;

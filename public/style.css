@@ -1,3 +1,7 @@
+body {
+    background-color: #494949;
+    color: white;
+}
 .preise {
 
     width:200px;
@@ -11,4 +15,20 @@
 .sevenSeg-svg {
     fill:#09101b;
     
+}
+
+#changes {
+   
+    
+}
+
+.recent {
+    
+    
+}
+
+.row {
+    background-color: #777777;
+    border-radius: 10px;
+    padding: 20px;
 }

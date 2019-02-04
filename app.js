@@ -28,7 +28,7 @@ function hoyerRequest (req, res, next){
            $('#sorte_3_1').filter(function(){
                 //checke ob a segment an oder aus ist.
                 var data = $(this);
-                preise.diesel = data.text();
+                preise.diesel = parseFloat(data.text(), 10);
                 console.log(preise.diesel);
                 
 
@@ -36,7 +36,7 @@ function hoyerRequest (req, res, next){
             $('#sorte_5_3').filter(function(){
                 //checke ob a segment an oder aus ist.
                 var data = $(this);
-                preise.sorteSuper = data.text();
+                preise.sorteSuper = parseFloat(data.text(), 10);
                 console.log(preise.sorteSuper);
                 
                 
@@ -45,7 +45,7 @@ function hoyerRequest (req, res, next){
             $('#sorte_1_10').filter(function(){
                 //checke ob a segment an oder aus ist.
                 var data = $(this);
-                preise.superPlus = data.text();
+                preise.superPlus = parseFloat(data.text(), 10);
                 console.log(preise.superPlus);
                
                 

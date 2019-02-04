@@ -33,9 +33,9 @@
            
     </div>
             
-
+    
      <script>
-         $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%> });
+         $("#diesel").sevenSeg({ digits: 4, value: parseFloat(<%=preise.diesel%>)});
          $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%> });
          $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%> });
 

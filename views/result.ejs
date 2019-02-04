@@ -1,0 +1,52 @@
+<html>
+    <head>
+            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+    <script src="../sevenSeg.js"></script>
+   
+
+
+    </head>
+    <body>
+        
+    <div class="container">
+            <h1>Aktuelle Preise Hoyer Tankstelle</h1>
+
+            
+           
+            <div>
+                <h4>Diesel</h4>
+                <div id="diesel" class="preise"></div>
+            </div>
+            <div>
+                <h4>Super</h4>
+                <div id="super" class="preise"></div>
+            </div>
+            <div> 
+                <h4>Super +</h4>
+                <div id="superPlus" class="preise"></div>
+            </div>
+           
+    </div>
+            
+
+     <script>
+         $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%> });
+         $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%> });
+         $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%> });
+
+     </script>               
+
+
+    </body>
+
+</html>
+
+
+
+
+

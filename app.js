@@ -25,7 +25,7 @@ var alert = {};
 
 
 
-
+//MIDDLEWARE
 function hoyerRequest (req, res, next){
 
     request("https://www.hoyer-tankstellen.de/tankstelle/hoyer_autohof_hansator-28217_bremen-hansator_7", function(error, response, html){
@@ -116,10 +116,32 @@ function hoyerRequest (req, res, next){
 
 };
 
+function resetValues (req, res, next){
+    alert = {
+        oldVal: "",
+        newVal: ""
+    };
 
+    preise = {
+        diesel: "",
+        superPlus: "",
+        sorteSuper: ""
+    };
+    altePreise = {
+        diesel: "",
+        superPlus: "",
+        sorteSuper: ""
+    };
+};
 
  
+app.get("/", function(req, res){
+    
 
+    res.redirect("/scrape");
+    
+
+});
  
 
 app.get("/scrape",hoyerRequest, function(req, res){
@@ -131,12 +153,12 @@ app.get("/scrape",hoyerRequest, function(req, res){
 });
 
 
-app.post("/reset", function(req, res){
-    //reset values -> altePreise & preise
+app.post("/reset", resetValues, function(req, res){
+    
     
 
     //redirect to scrape route 
-
+    res.redirect("/scrape");
 
 });
 

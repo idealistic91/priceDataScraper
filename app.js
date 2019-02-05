@@ -7,11 +7,11 @@ var app     = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-
 var preise = {
     diesel: "",
     sorteSuper: "",
-    superPlus: ""
+    superPlus: "",
+    date: ""
 };
 
 var altePreise = {
@@ -19,6 +19,7 @@ var altePreise = {
     sorteSuper: "",
     superPlus: ""
 };
+
 var alert = {};
 
 
@@ -31,10 +32,18 @@ function hoyerRequest (req, res, next){
 
         if(!error && response.statusCode == 200){
             var $ = cheerio.load(html);       
-            console.log("keine fehler");
+            console.log("Abfrage ");
             
             
+           $(".aktualisierungsDatum").filter(function(){
+            var data = $(this);
+            var datum = data.children("strong").text();
+            preise.date = datum;
             
+           
+
+
+           });
            
            $('#sorte_3_1').filter(function(){
                 
@@ -46,6 +55,8 @@ function hoyerRequest (req, res, next){
                         oldVal : preise.diesel,
                         newVal : data.text()
                     }
+                    altePreise.diesel = preise.diesel;
+
                 };
                 preise.diesel = parseFloat(data.text(), 10);
                 console.log(preise.diesel);
@@ -62,6 +73,7 @@ function hoyerRequest (req, res, next){
                         oldVal : preise.sorteSuper,
                         newVal : data.text()
                     }
+                    altePreise.sorteSuper = preise.sorteSuper;
                 };
                 preise.sorteSuper = parseFloat(data.text(), 10);
                 console.log(preise.sorteSuper);
@@ -78,8 +90,7 @@ function hoyerRequest (req, res, next){
                         oldVal : preise.superPlus,
                         newVal : data.text()
                     }
-                    console.log("old value: "+alert.oldVal);
-                    console.log("new value: "+alert.newVal);
+                    altePreise.superPlus = preise.superPlus;
 
                 };
                 preise.superPlus = parseFloat(data.text(), 10);
@@ -114,8 +125,18 @@ function hoyerRequest (req, res, next){
 app.get("/scrape",hoyerRequest, function(req, res){
     
 
-    res.render("result", {preise: preise, alert: alert});
+    res.render("result", {preise: preise, alert: alert, altePreise: altePreise});
     
+
+});
+
+
+app.post("/reset", function(req, res){
+    //reset values -> altePreise & preise
+    
+
+    //redirect to scrape route 
+
 
 });
 

@@ -1,6 +1,6 @@
 <html>
     <head>
-            <meta http-equiv="refresh" content="5; URL="/scrape">
+            <!-- <meta http-equiv="refresh" content="5; URL="/scrape"> -->
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../style.css">
@@ -8,38 +8,53 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
     <script src="../sevenSeg.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.core.min.js"></script>
    
 
 
     </head>
     <body>
+            
         <%if(alert.oldVal){ %>
+            <script>
+                
+                    var sound = new Howl({
+                                    src: ['../sounds/pinwheel.mp3']
+                                    });
+                    
+                    sound.play();
+                </script>
             <div class="alert alert-danger" role="alert">
                     Die Preise haben sich verändert!!
             </div>
+           
         <%}%>
     <div class="container">
         <h1>Preise Tankstelle Hoyer</h1>
     </div>    
     <div class="container">  
-        <div class="row">
-            <div class="recent col-sm">
+        <div class="row justify-content-center">
+            <div class="recent col-12">
                     <div class="head">
                             <h2>Aktuell</h2>
                         </div>   
                     
                 
-                    <div>
+                    <div class="kraftstoff">
                         <h4>Diesel</h4>
                         <div id="diesel" class="preise"></div>
                     </div>
-                    <div>
+                    <div class="kraftstoff">
                         <h4>Super</h4>
                         <div id="super" class="preise"></div>
                     </div>
-                    <div> 
+                    <div class="kraftstoff"> 
                         <h4>Super +</h4>
                         <div id="superPlus" class="preise"></div>
+                    </div>
+                    <div id="datum">
+                        <%console.log("Datum: "+preise.date)%>
+                        <span><%=preise.date%></span>      
                     </div>
                 
             </div>
@@ -65,26 +80,36 @@
             <%}%>
         </div>    
     </div>         
-    
+    <%if(alert.oldVal){ %>
+        <script>
+            $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
+            $("#super").sevenSeg({ digits: 4, value: <%=altePreise.sorteSuper%>});
+            $("#superPlus").sevenSeg({ digits: 4, value: <%=altePreise.superPlus%>});
+
+            $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
+            $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+            $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+        </script>
+
+    <%} else {%>
+        <script>
+            $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
+            $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+            $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+        </script>
+        <%};%>
      <script>
+       
          
-        
-        
-        
-         $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
-         $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
-         $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
 
 
-         $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
-         $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
-         $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+         
       
 
-         setTimeout(function(){
-                            window.location.reload(1);
+        //  setTimeout(function(){
+        //                     window.location.reload(1);
 
-                            }, 5000);
+        //                     }, 5000);
 
 
 

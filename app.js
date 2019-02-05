@@ -21,8 +21,96 @@ var altePreise = {
 };
 
 var alert = {};
+//testfunction -> dummysiteRequest
+// function hoyerRequest (req, res, next){
+
+//     request("https://dummysite1337.herokuapp.com", function(error, response, html){
+
+//         if(!error && response.statusCode == 200){
+//             var $ = cheerio.load(html);       
+//             console.log("Abfrage ");
+            
+            
+//            $(".aktualisierungsDatum").filter(function(){
+//             var data = $(this);
+//             var datum = data.children("strong").text();
+//             preise.date = datum;
+            
+           
 
 
+//            });
+           
+//            $('#sorte_3_1').filter(function(){
+                
+//                 var data = $(this);
+//                 if(data.text()!=preise.diesel){
+//                     console.log("Diesel has changed");
+
+//                     alert = {
+//                         oldVal : preise.diesel,
+//                         newVal : data.text()
+//                     }
+//                     altePreise.diesel = preise.diesel;
+
+//                 };
+//                 preise.diesel = parseFloat(data.text(), 10);
+//                 console.log(preise.diesel);
+                
+
+//             });
+//             $('#sorte_5_3').filter(function(){
+                
+//                 var data = $(this);
+//                 if(data.text()!=preise.sorteSuper){
+//                     console.log("Super has changed");
+
+//                     alert = {
+//                         oldVal : preise.sorteSuper,
+//                         newVal : data.text()
+//                     }
+//                     altePreise.sorteSuper = preise.sorteSuper;
+//                 };
+//                 preise.sorteSuper = parseFloat(data.text(), 10);
+//                 console.log(preise.sorteSuper);
+                
+                
+
+//             });
+//             $('#sorte_1_10').filter(function(){
+                
+//                 var data = $(this);
+//                 if(data.text()!=preise.superPlus){
+//                     console.log("Super plus has changed");
+//                     alert = {
+//                         oldVal : preise.superPlus,
+//                         newVal : data.text()
+//                     }
+//                     altePreise.superPlus = preise.superPlus;
+
+//                 };
+//                 preise.superPlus = parseFloat(data.text(), 10);
+//                 console.log(preise.superPlus);
+//                 next();
+                
+
+//             });
+            
+            
+            
+//         } if(error) {
+//             console.log("Fehler: "+error);
+
+//          };
+         
+        
+
+//     });
+
+    
+
+
+// };
 
 
 //MIDDLEWARE
@@ -95,7 +183,7 @@ function hoyerRequest (req, res, next){
                 };
                 preise.superPlus = parseFloat(data.text(), 10);
                 console.log(preise.superPlus);
-               
+                   next();
                 
 
             });
@@ -111,28 +199,11 @@ function hoyerRequest (req, res, next){
 
     });
 
-    next();
+    
 
 
 };
 
-function resetValues (req, res, next){
-    alert = {
-        oldVal: "",
-        newVal: ""
-    };
-
-    preise = {
-        diesel: "",
-        superPlus: "",
-        sorteSuper: ""
-    };
-    altePreise = {
-        diesel: "",
-        superPlus: "",
-        sorteSuper: ""
-    };
-};
 
 //ROUTES
 app.get("/", function(req, res){
@@ -152,20 +223,40 @@ app.get("/scrape",hoyerRequest, function(req, res){
 
 });
 
-
-app.get("/reset", resetValues, function(req, res){
+//resetValues
+app.get("/reset",resetValues, function(req, res){
     
     
 
     //redirect to scrape route 
-    res.redirect("/scrape");
+  res.redirect("/");
 
 });
 
+//middleware
+function resetValues (req, res, next){
+    alert = {
+        oldVal: "",
+        newVal: ""
+    };
+
+    preise = {
+        diesel: "",
+        superPlus: "",
+        sorteSuper: ""
+    };
+    altePreise = {
+        diesel: "",
+        superPlus: "",
+        sorteSuper: ""
+    };
+
+    next();
+};
 
 
 
-
+//process.env.PORT, process.env.IP
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("started");

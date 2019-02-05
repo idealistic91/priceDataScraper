@@ -37,7 +37,7 @@
     </div>    
     <div class="container">  
         <div class="row justify-content-center">
-            <div class="recent col-12">
+            <div class="recent col-md-6">
                     <div class="head">
                             <h2>Aktuell</h2>
                         </div>   
@@ -62,7 +62,7 @@
                 
             </div>
             <%if(alert.oldVal){ %>
-            <div class="col-sm" id="changes">
+            <div class="col-md-6" id="changes">
                 <div class="head">
                     <h2>Änderungen</h2>
                 </div>   
@@ -89,7 +89,7 @@
             $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
             $("#super").sevenSeg({ digits: 4, value: <%=altePreise.sorteSuper%>});
             $("#superPlus").sevenSeg({ digits: 4, value: <%=altePreise.superPlus%>});
-
+            
             $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
             $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
             $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});

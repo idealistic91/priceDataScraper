@@ -28,6 +28,7 @@
                 </script>
             <div class="alert alert-danger" role="alert">
                     Die Preise haben sich verändert!!
+                    <a class="btn btn-button" href="/reset">OK</a>
             </div>
            
         <%}%>
@@ -81,7 +82,8 @@
             </div>
             <%}%>
         </div>    
-    </div>         
+    </div>    
+         <!--When Prices change   -->
     <%if(alert.oldVal){ %>
         <script>
             $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});

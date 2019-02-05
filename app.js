@@ -134,7 +134,7 @@ function resetValues (req, res, next){
     };
 };
 
- 
+//ROUTES
 app.get("/", function(req, res){
     
 
@@ -153,7 +153,7 @@ app.get("/scrape",hoyerRequest, function(req, res){
 });
 
 
-app.post("/reset", resetValues, function(req, res){
+app.get("/reset", resetValues, function(req, res){
     
     
 
@@ -163,7 +163,11 @@ app.post("/reset", resetValues, function(req, res){
 });
 
 
-app.listen(3000, function(){
+
+
+
+
+app.listen(process.env.PORT, process.env.IP, function(){
     console.log("started");
 });
 

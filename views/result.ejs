@@ -1,6 +1,8 @@
 <html>
     <head>
-            <!-- <meta http-equiv="refresh" content="5; URL="/scrape"> -->
+        <%if(!alert.oldVal){ %>
+            <meta http-equiv="refresh" content="5; URL="/scrape">
+         <%}%>   
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../style.css">
@@ -98,23 +100,25 @@
             $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
         </script>
         <%};%>
-     <script>
+
+
+    <%if(!alert.oldVal){ %>   
+        <script>
        
          
 
 
-         
       
 
-        //  setTimeout(function(){
-        //                     window.location.reload(1);
+         setTimeout(function(){
+                            window.location.reload(1);
 
-        //                     }, 5000);
+                            }, 5000);
 
 
 
-     </script>               
-
+        </script>               
+    <%}%>
 
     </body>
 

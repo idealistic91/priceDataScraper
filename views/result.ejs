@@ -64,7 +64,7 @@
             <%if(alert.oldVal){ %>
             <div class="col-md-6" id="changes">
                 <div class="head">
-                    <h2>Änderungen</h2>
+                    <h2>Neue Werte</h2>
                 </div>   
                     <div class="kraftstoff">
                         <h4>Diesel</h4>
@@ -84,16 +84,50 @@
         </div>    
     </div>    
          <!--When Prices change   -->
-    <%if(alert.oldVal){ %>
+
+    <%if(alert.oldVal){%>
+            <%if(altePreise.diesel){ %>
+                <script>
+                    $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
+                </script>
+            <%};%>    
+            <%if(altePreise.sorteSuper){ %>
+                <script>
+                    $("#super").sevenSeg({ digits: 4, value: <%=altePreise.sorteSuper%>});
+                </script>  
+            <%};%>       
+            <%if(altePreise.superPlus){ %>
+                <script>
+                    $("#superPlus").sevenSeg({ digits: 4, value: <%=altePreise.superPlus%>});
+                </script>   
+            <%};%> 
+        <%if(preise.diesel != altePreise.diesel){%>
         <script>
-            $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
-            $("#super").sevenSeg({ digits: 4, value: <%=altePreise.sorteSuper%>});
-            $("#superPlus").sevenSeg({ digits: 4, value: <%=altePreise.superPlus%>});
-            
             $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
-            $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
-            $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+            $("#dieselNEU .sevenSeg-segOn").css("fill", "red");
+            $("#dieselNEU .sevenSeg-svg").css("fill", "#320000");
+
+            
         </script>
+        <%}%>
+        <%if(preise.sorteSuper != altePreise.sorteSuper){%>
+        <script>
+            $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+            $("#superNEU .sevenSeg-segOn").css("fill", "red");
+            $("#superNEU .sevenSeg-svg").css("fill", "#320000");
+        </script>
+         <%}%>
+         <%if(preise.superPlus != altePreise.superPlus){%>
+        <script>
+            $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+            $("#superPlusNEU .sevenSeg-segOn").css("fill", "red");
+            $("#superPlusNEU .sevenSeg-svg").css("fill", "#320000");
+        </script>
+         <%}%>   
+            
+        
+            
+       
 
     <%} else {%>
         <script>

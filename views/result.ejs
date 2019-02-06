@@ -19,12 +19,13 @@
             
         <%if(alert.oldVal){ %>
             <script>
-                
+
                     var sound = new Howl({
                                     src: ['../sounds/pinwheel.mp3']
                                     });
                     
                     sound.play();
+                    alert("Preise haben sich verändert!");
                 </script>
             <div class="alert alert-danger" role="alert">
                     Die Preise haben sich verändert!!

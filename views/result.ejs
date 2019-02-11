@@ -9,14 +9,38 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="../sevenSeg.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.core.min.js"></script>
-   
+    <script>
+         function scanForPrices (onOrOff){
+                    
+
+                    setTimeout(function(){
+
+                                    if(onOrOff){
+                                        window.location.reload(1)
+                                    } else {
+                                        console.log("Scan deactivated!!")
+                                    
+                                    };
+                                    
+
+                                    }, 5000);
+
+                                
+                  
+                                    
+
+                                                      
+                };
+    </script>
 
 
     </head>
     <body>
-            
+        
+
         <%if(alert.oldVal){ %>
             <script>
 
@@ -25,68 +49,118 @@
                                     });
                     
                     sound.play();
-                    alert("Preise haben sich verändert!");
+                   
                 </script>
-            <div class="alert alert-danger" role="alert">
-                    Die Preise haben sich verändert!!
-                    <a class="btn btn-button" href="/reset">OK</a>
-            </div>
+
+         <div class="container">
+                <div class="alert alert-danger d-flex justify-content-between" role="alert">
+                        Die Preise haben sich verändert!!
+                        <a class="btn btn-primary" id="resetBtn"  href="/reset">OK</a>
+                </div>
+         </div>       
+           
            
         <%}%>
     <div class="container">
-        <h1>Preise Tankstelle Hoyer</h1>
+        <h1>Pricetracker</h1>
     </div>    
-    <div class="container">  
-        <div class="row justify-content-center">
-            <div class="recent col-md-6">
-                    <div class="head">
-                            <h2>Aktuell</h2>
-                        </div>   
+    <div class="container" id="mainWindow">
+        <div class="row justify-content-center" id="headLine">
+                <div class="col-md-12 head">
+                        <h3>Preise</h3>
+                </div>
+             
+        </div>  
+       
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                            <div class="kraftstoff row">
+                                <h4 class="col-md-4">Diesel</h4>
+                                <div id="diesel" class="preise"></div>
+                            </div>
+                    </div>
+                    <%if(alert.oldVal){%>
+                    <div class="col-md-6">   
+                            <div class="kraftstoff row">
+                                <div class="arrow">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div id="dieselNEU" class="preise"></div>
+                            </div>
+                    </div>        
+                    <%}%>    
+                </div>  
+                <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="kraftstoff row">
+                                <h4 class="col-md-4">Super</h4>
+                                <div id="super" class="preise"></div>
+                            </div>
+                        </div>
+                    <%if(alert.oldVal){%>
+                        <div class="col-md-6">
+                            <div class="kraftstoff row">
+                                <div class="arrow">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div id="superNEU" class="preise"></div>
+                            </div>
+                        </div>
+                    <%}%>  
+                </div>  
+                <div class="row justify-content-center">   
+                        <div class="col-md-6">
+                            <div class="kraftstoff row"> 
+                                <h4 class="col-md-4">Super +</h4>
+                                <div id="superPlus" class="preise"></div>
+                            </div>
+                        </div>
+                    <%if(alert.oldVal){%>
+                        <div class="col-md-6">
+                            <div class="kraftstoff row">
+                                <div class="arrow">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div> 
+                                <div id="superPlusNEU" class="preise"></div>
+                            </div>
+                        </div>    
+                    <%}%>  
+
+                </div>        
+           
+            
+       
+    </div> 
+    
+    <div class="container" id="footer">
+        <div class="row justify-content-between" id="footLine">
+            <div class="col-md-6">
+            <h3>About</h3>
+            </div>
+            <div class="col-md-6">
+                <h3 style="float:right">ver. 1.09</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                    <span>&copy; 2019 Jens Frerichs </span><br>
+                    <a href="https://github.com/idealistic91/priceDataScraper">GitHub-repository</a>
                     
-                
-                    <div class="kraftstoff">
-                        <h4>Diesel</h4>
-                        <div id="diesel" class="preise"></div>
-                    </div>
-                    <div class="kraftstoff">
-                        <h4>Super</h4>
-                        <div id="super" class="preise"></div>
-                    </div>
-                    <div class="kraftstoff"> 
-                        <h4>Super +</h4>
-                        <div id="superPlus" class="preise"></div>
-                    </div>
-                    <div id="datum">
-                        
-                        <span><%=preise.date%></span>      
-                    </div>
-                
             </div>
-            <%if(alert.oldVal){ %>
-            <div class="col-md-6" id="changes">
-                <div class="head">
-                    <h2>Neue Werte</h2>
-                </div>   
-                    <div class="kraftstoff">
-                        <h4>Diesel</h4>
-                        <div id="dieselNEU" class="preise"></div>
-                    </div>
-                    <div class="kraftstoff">
-                        <h4>Super</h4>
-                        <div id="superNEU" class="preise"></div>
-                    </div>
-                    <div class="kraftstoff"> 
-                        <h4>Super +</h4>
-                        <div id="superPlusNEU" class="preise"></div>
-                    </div>
-                
-            </div>
-            <%}%>
-        </div>    
-    </div>    
-         <!--When Prices change   -->
+           
+        </div>
+
+
+    </div>
+         <!--When Prices change assign new  -->
 
     <%if(alert.oldVal){%>
+        <!-- Show head "neue werte" -->
+            <script>
+            
+            </script>
+
+
             <%if(altePreise.diesel){ %>
                 <script>
                     $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
@@ -105,6 +179,7 @@
         <%if(preise.diesel != altePreise.diesel){%>
         <script>
             $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
+            $("#dieselNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
             $("#dieselNEU .sevenSeg-segOn").css("fill", "red");
             $("#dieselNEU .sevenSeg-svg").css("fill", "#320000");
 
@@ -114,6 +189,7 @@
         <%if(preise.sorteSuper != altePreise.sorteSuper){%>
         <script>
             $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
+            $("#superNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
             $("#superNEU .sevenSeg-segOn").css("fill", "red");
             $("#superNEU .sevenSeg-svg").css("fill", "#320000");
         </script>
@@ -121,6 +197,7 @@
          <%if(preise.superPlus != altePreise.superPlus){%>
         <script>
             $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
+            $("#superPlusNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
             $("#superPlusNEU .sevenSeg-segOn").css("fill", "red");
             $("#superPlusNEU .sevenSeg-svg").css("fill", "#320000");
         </script>
@@ -142,21 +219,17 @@
     <%if(!alert.oldVal){ %>   
         <script>
        
-         
-
-
-      
-
-         setTimeout(function(){
-                            window.location.reload(1);
-
-                            }, 5000);
-
-
-
+        
+        scanForPrices(1);
+    
+    
         </script>               
     <%}%>
+        <script>
 
+               
+        
+        </script>
     </body>
 
 </html>

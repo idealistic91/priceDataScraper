@@ -21,7 +21,10 @@ https://nodejs.org/en/download/
 3) Change into correct directory<br>
 ```cd priceDataScraper```
 
-4) Set environmental variables for the requestURL, the port and IP where to serve the app
+4) run npm install
+```npm install```
+
+5) Set environmental variables for the requestURL, the port and IP where to serve the app
 
 ```export REQUESTURL=https://www.hoyer-tankstellen.de/tankstelle/hoyer_autohof_hansator-28217_bremen-hansator_7```
 	
@@ -29,7 +32,7 @@ Only when run on a local machine:
 	```export PORT=3000
 	export IP=127.0.0.1```
 
-5) Start the app
+6) Start the app
 
 ```node app.js```
 

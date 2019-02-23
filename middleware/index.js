@@ -7,23 +7,60 @@ var url= process.env.REQUESTURL;
 
 var middleware = {
 
-    preise: {
-        diesel: "",
-        sorteSuper: "",
-        superPlus: "",
-        date: ""
-    },
-    altePreise: {
-        diesel: "",
-        sorteSuper: "",
-        superPlus: ""
-    },
+    preise: [
+        {"diesel": ""},
+        {"sorteSuper": ""},
+        {"superPlus": ""},
+        {"superE10": ""}
+    ],
+    altePreise: [
+        {"diesel": ""},
+        {"sorteSuper": ""},
+        {"superE10": ""},
+        {"superPlus": ""}
+    ],
+
     alert: {
         oldVal: "",
-        newVal: ""
+        newVal: "",
+        date: ""
     },
 
+    filter: [
+            ["#sorte_3_1", "diesel"],
+            ["#sorte_5_3", "sorteSuper"],
+            ["#sorte_1_10","superPlus"],
+            ["#sorte_16_9", "superE10"]
+    ],
 
+    fuelFilter: function(domElement, fuel, $, next){
+        
+        $(domElement).filter(function(){
+                    
+            var data = $(this);
+            if(data.text()!=middleware.preise[fuel]){
+                console.log("Diesel has changed");
+
+                middleware.alert = {
+                    oldVal : middleware.preise[fuel],
+                    newVal : data.text()
+                }
+                
+                middleware.altePreise[fuel] = middleware.preise[fuel];
+
+            } else {
+                middleware.altePreise[fuel] = middleware.preise[fuel];
+            };
+            middleware.preise[fuel] = parseFloat(data.text(), 10);
+            console.log(middleware.preise[fuel]);
+
+            if(next){
+                next();
+            };
+            
+
+        })
+    },
 
     
     hoyerRequest: function(req, res, next){
@@ -33,70 +70,18 @@ var middleware = {
                 var $ = cheerio.load(html);       
                 console.log("Abfrage ");
                 
-               
-               $('#sorte_3_1').filter(function(){
-                    
-                    var data = $(this);
-                    if(data.text()!=middleware.preise.diesel){
-                        console.log("Diesel has changed");
-    
-                        middleware.alert = {
-                            oldVal : middleware.preise.diesel,
-                            newVal : data.text()
-                        }
-                       
-                        middleware.altePreise.diesel = middleware.preise.diesel;
-    
-                    } else {
-                        middleware.altePreise.diesel = middleware.preise.diesel;
-                    };
-                    middleware.preise.diesel = parseFloat(data.text(), 10);
-                    console.log(middleware.preise.diesel);
-                    
-    
-                });
-                $('#sorte_5_3').filter(function(){
-                    
-                    var data = $(this);
-                    if(data.text()!=middleware.preise.sorteSuper){
-                        console.log("Super has changed");
-    
-                        middleware.alert = {
-                            oldVal : middleware.preise.sorteSuper,
-                            newVal : data.text()
-                        }
-                        middleware.altePreise.sorteSuper = middleware.preise.sorteSuper;
-                    } else {
-                        middleware.altePreise.sorteSuper = middleware.preise.sorteSuper;
-                    };
-                    middleware.preise.sorteSuper = parseFloat(data.text(), 10);
-                    console.log(middleware.preise.sorteSuper);
-                    
-                    
-    
-                });
-                $('#sorte_1_10').filter(function(){
-                    
-                    var data = $(this);
-                    if(data.text()!=middleware.preise.superPlus){
-                        console.log("Super plus has changed");
-                        middleware.alert = {
-                            oldVal : middleware.preise.superPlus,
-                            newVal : data.text()
-                        }
-                        middleware.altePreise.superPlus = middleware.preise.superPlus;
-    
-                    } else {
-                        middleware.altePreise.superPlus = middleware.preise.superPlus;
-                    };
-                    middleware.preise.superPlus = parseFloat(data.text(), 10);
-                    console.log(middleware.preise.superPlus);
-    
-                    next();
-                    
-    
-                });
-                
+                // middleware.filter.forEach(function(item, a){
+                //     // middleware.fuelFilter(index, item,$);
+                //     console.log(item);
+
+                // });
+
+                for(var i=0; i<middleware.filter.length; i++){
+                   
+                    middleware.fuelFilter(middleware.filter[i][0], middleware.filter[i][1],$);
+                };
+
+                next();
                 
                 
             } if(error) {
@@ -110,22 +95,23 @@ var middleware = {
     },
 
     resetValues: function(req, res, next){
+        
         middleware.alert = {
             oldVal: "",
-            newVal: ""
+            newVal: "",
+            date: ""
         };
     
-        middleware.preise = {
-            diesel: "",
-            superPlus: "",
-            sorteSuper: ""
-        };
-        middleware.altePreise = {
-            diesel: "",
-            superPlus: "",
-            sorteSuper: ""
-        };
-    
+        
+        middleware.preise.forEach(function(fuel, index, object){
+            object.splice(index, 1);
+        });
+        middleware.altePreise.forEach(function(fuel, index, object){
+            object.splice(index, 1);
+        });
+
+
+
         next();
 
 

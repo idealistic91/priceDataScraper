@@ -24,10 +24,8 @@ router.get("/scrape", middleware.hoyerRequest, function(req, res){
 //resetValues
 router.get("/reset", middleware.resetValues, function(req, res){
     
-    
-
     //redirect to scrape route 
-  res.redirect("/");
+    res.redirect("/");
 
 });
 

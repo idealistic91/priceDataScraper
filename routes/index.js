@@ -13,10 +13,10 @@ router.get("/", function(req, res){
 });
  
 
-router.get("/scrape", middleware.hoyerRequest, function(req, res){
+router.get("/scrape", function(req, res){
     
 
-    res.render("result", {preise: middleware.preise, alert: middleware.alert, altePreise: middleware.altePreise});
+    res.render("result");
     
 
 });

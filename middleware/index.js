@@ -36,21 +36,19 @@ var middleware = {
     fuelFilter: function(domElement, fuel, $, next){
         
         $(domElement).filter(function(){
-                    
+            //load json
+             //save fuel.after to fuel.before       
             var data = $(this);
-            if(data.text()!=middleware.preise[fuel]){
+            //check if requested data differs from fuel.before
+            if(data.text()!=){
                 console.log("Diesel has changed");
-
-                middleware.alert = {
-                    oldVal : middleware.preise[fuel],
-                    newVal : data.text()
-                }
-                
-                middleware.altePreise[fuel] = middleware.preise[fuel];
 
             } else {
                 middleware.altePreise[fuel] = middleware.preise[fuel];
             };
+
+            //save new val into json file fuel.after
+
             middleware.preise[fuel] = parseFloat(data.text(), 10);
             console.log(middleware.preise[fuel]);
 

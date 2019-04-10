@@ -28,6 +28,13 @@ body {
     
 }
 
+
+
+
+.new {
+    display: none;
+}
+
 .arrow {
     font-size: 50px;
     padding-top: 20px;

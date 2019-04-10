@@ -1,8 +1,6 @@
 <html>
     <head>
-        <%if(!alert.oldVal){ %>
-            <meta http-equiv="refresh" content="5; URL="/scrape">
-         <%}%>   
+      
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../style.css">
@@ -12,55 +10,21 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="../sevenSeg.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.core.min.js"></script>
-    <script>
-         function scanForPrices (onOrOff){
-                    
-
-                    setTimeout(function(){
-
-                                    if(onOrOff){
-                                        window.location.reload(1)
-                                    } else {
-                                        console.log("Scan deactivated!!")
-                                    
-                                    };
-                                    
-
-                                    }, 5000);
-
-                                
-                  
-                                    
-
-                                                      
-                };
-    </script>
-
+  
 
     </head>
     <body>
         
 
-        <%if(alert.oldVal){ %>
-            <script>
-
-                    var sound = new Howl({
-                                    src: ['../sounds/pinwheel.mp3']
-                                    });
-                    
-                    sound.play();
-                   
-                </script>
-
-         <div class="container">
+         <div class="container d-none" id="notifyBox">
                 <div class="alert alert-danger d-flex justify-content-between" role="alert">
                         Die Preise haben sich verändert!!
-                        <a class="btn btn-primary" id="resetBtn"  href="/reset">OK</a>
+                        <button class="btn btn-primary" id="resetBtn" onclick="confirmChange()">OK</button>
                 </div>
          </div>       
            
            
-        <%}%>
+      
     <div class="container">
         <h1>Pricetracker</h1>
     </div>    
@@ -79,8 +43,8 @@
                                 <div id="diesel" class="preise"></div>
                             </div>
                     </div>
-                    <%if(alert.oldVal){%>
-                    <div class="col-md-6">   
+                   
+                    <div class="col-md-6 new">   
                             <div class="kraftstoff row">
                                 <div class="arrow">
                                     <i class="fas fa-exchange-alt"></i>
@@ -88,7 +52,7 @@
                                 <div id="dieselNEU" class="preise"></div>
                             </div>
                     </div>        
-                    <%}%>    
+                  
                 </div>  
                 <div class="row justify-content-center">
                         <div class="col-md-6">
@@ -97,8 +61,8 @@
                                 <div id="super" class="preise"></div>
                             </div>
                         </div>
-                    <%if(alert.oldVal){%>
-                        <div class="col-md-6">
+                   
+                        <div class="col-md-6 new">
                             <div class="kraftstoff row">
                                 <div class="arrow">
                                     <i class="fas fa-exchange-alt"></i>
@@ -106,7 +70,7 @@
                                 <div id="superNEU" class="preise"></div>
                             </div>
                         </div>
-                    <%}%>  
+                   
                 </div>  
                 <div class="row justify-content-center">   
                         <div class="col-md-6">
@@ -115,8 +79,8 @@
                                 <div id="superPlus" class="preise"></div>
                             </div>
                         </div>
-                    <%if(alert.oldVal){%>
-                        <div class="col-md-6">
+                   
+                        <div class="col-md-6 new">
                             <div class="kraftstoff row">
                                 <div class="arrow">
                                     <i class="fas fa-exchange-alt"></i>
@@ -124,7 +88,7 @@
                                 <div id="superPlusNEU" class="preise"></div>
                             </div>
                         </div>    
-                    <%}%>  
+                   
 
                 </div>        
            
@@ -152,84 +116,13 @@
 
 
     </div>
-         <!--When Prices change assign new  -->
-
-    <%if(alert.oldVal){%>
-        <!-- Show head "neue werte" -->
-            <script>
-            
-            </script>
-
-
-            <%if(altePreise.diesel){ %>
-                <script>
-                    $("#diesel").sevenSeg({ digits: 4, value: <%=altePreise.diesel%>});
-                </script>
-            <%};%>    
-            <%if(altePreise.sorteSuper){ %>
-                <script>
-                    $("#super").sevenSeg({ digits: 4, value: <%=altePreise.sorteSuper%>});
-                </script>  
-            <%};%>       
-            <%if(altePreise.superPlus){ %>
-                <script>
-                    $("#superPlus").sevenSeg({ digits: 4, value: <%=altePreise.superPlus%>});
-                </script>   
-            <%};%> 
-        <%if(preise.diesel != altePreise.diesel){%>
-        <script>
-            $("#dieselNEU").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
-            $("#dieselNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
-            $("#dieselNEU .sevenSeg-segOn").css("fill", "red");
-            $("#dieselNEU .sevenSeg-svg").css("fill", "#320000");
-
-            
-        </script>
-        <%}%>
-        <%if(preise.sorteSuper != altePreise.sorteSuper){%>
-        <script>
-            $("#superNEU").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
-            $("#superNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
-            $("#superNEU .sevenSeg-segOn").css("fill", "red");
-            $("#superNEU .sevenSeg-svg").css("fill", "#320000");
-        </script>
-         <%}%>
-         <%if(preise.superPlus != altePreise.superPlus){%>
-        <script>
-            $("#superPlusNEU").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
-            $("#superPlusNEU").parent().children(".arrow").children(".fas.fa-exchange-alt").css("display", "inline");
-            $("#superPlusNEU .sevenSeg-segOn").css("fill", "red");
-            $("#superPlusNEU .sevenSeg-svg").css("fill", "#320000");
-        </script>
-         <%}%>   
-            
         
-            
-       
+      
 
-    <%} else {%>
-        <script>
-            $("#diesel").sevenSeg({ digits: 4, value: <%=preise.diesel%>});
-            $("#super").sevenSeg({ digits: 4, value: <%=preise.sorteSuper%>});
-            $("#superPlus").sevenSeg({ digits: 4, value: <%=preise.superPlus%>});
-        </script>
-        <%};%>
-
-
-    <%if(!alert.oldVal){ %>   
-        <script>
-       
-        
-        scanForPrices(1);
+        <script src="../ajax.js"></script>
     
-    
-        </script>               
-    <%}%>
-        <script>
-
-               
-        
-        </script>
+   
+       
     </body>
 
 </html>

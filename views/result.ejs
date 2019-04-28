@@ -1,8 +1,6 @@
 <html>
     <head>
-        <%if(!alert.oldVal){ %>
-            <meta http-equiv="refresh" content="5; URL="/scrape">
-         <%}%>   
+    
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../style.css">
@@ -12,55 +10,16 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="../sevenSeg.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.core.min.js"></script>
-    <script>
-         function scanForPrices (onOrOff){
-                    
+    <script src="../ajax.js"></script>
 
-                    setTimeout(function(){
-
-                                    if(onOrOff){
-                                        window.location.reload(1)
-                                    } else {
-                                        console.log("Scan deactivated!!")
-                                    
-                                    };
-                                    
-
-                                    }, 5000);
-
-                                
-                  
-                                    
-
-                                                      
-                };
-    </script>
+  
 
 
     </head>
     <body>
         
 
-        <%if(alert.oldVal){ %>
-            <script>
-
-                    var sound = new Howl({
-                                    src: ['../sounds/pinwheel.mp3']
-                                    });
-                    
-                    sound.play();
-                   
-                </script>
-
-         <div class="container">
-                <div class="alert alert-danger d-flex justify-content-between" role="alert">
-                        Die Preise haben sich verändert!!
-                        <a class="btn btn-primary" id="resetBtn"  href="/reset">OK</a>
-                </div>
-         </div>       
-           
-           
-        <%}%>
+     
     <div class="container">
         <h1>Pricetracker</h1>
     </div>    
@@ -79,7 +38,7 @@
                                 <div id="diesel" class="preise"></div>
                             </div>
                     </div>
-                    <%if(alert.oldVal){%>
+                    <%if(data.alert.oldVal){%>
                     <div class="col-md-6">   
                             <div class="kraftstoff row">
                                 <div class="arrow">
@@ -97,7 +56,7 @@
                                 <div id="super" class="preise"></div>
                             </div>
                         </div>
-                    <%if(alert.oldVal){%>
+                    <%if(data.alert.oldVal){%>
                         <div class="col-md-6">
                             <div class="kraftstoff row">
                                 <div class="arrow">
@@ -115,7 +74,7 @@
                                 <div id="superPlus" class="preise"></div>
                             </div>
                         </div>
-                    <%if(alert.oldVal){%>
+                    <%if(data.alert.oldVal){%>
                         <div class="col-md-6">
                             <div class="kraftstoff row">
                                 <div class="arrow">
@@ -154,7 +113,7 @@
     </div>
          <!--When Prices change assign new  -->
 
-    <%if(alert.oldVal){%>
+    <%if(data.alert.oldVal){%>
         <!-- Show head "neue werte" -->
             <script>
             
@@ -216,11 +175,11 @@
         <%};%>
 
 
-    <%if(!alert.oldVal){ %>   
+    <%if(!data.alert.oldVal){ %>   
         <script>
        
         
-        scanForPrices(1);
+        scanForPrices(0);
     
     
         </script>               
@@ -230,6 +189,7 @@
                
         
         </script>
+
     </body>
 
 </html>

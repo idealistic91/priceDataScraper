@@ -2,7 +2,9 @@ var express = require("express");
 var router = express();
 var middleware = require("../middleware");
 
-
+router.get("/test", middleware.hoyerRequest ,function(req, res){
+    res.send({preise: middleware.preise, alert: middleware.alert, altePreise: middleware.altePreise});
+});
 
 router.get("/", function(req, res){
     
@@ -11,12 +13,16 @@ router.get("/", function(req, res){
     
 
 });
+
+
+
+
  
 
-router.get("/scrape", middleware.hoyerRequest, function(req, res){
+router.get("/scrape", function(req, res){
     
 
-    res.render("result", {preise: middleware.preise, alert: middleware.alert, altePreise: middleware.altePreise});
+    res.render("result");
     
 
 });
